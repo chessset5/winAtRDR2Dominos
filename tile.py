@@ -6,6 +6,16 @@ class Tile:
     big = None
 
     def __init__(self, face_one: int = None, face_two: int = None, existing_tile: 'Tile' = None) -> None:
+        '''
+        Accpets int and int or an existing Tile.
+        ints are pip halfs of the domino.
+        🁢	🁣	🁤	🁥	🁦	🁧	🁨	🁩	🁪	🁫	🁬	🁭	🁮	🁯
+        🁰	🁱	🁲	🁳	🁴	🁵	🁶	🁷	🁸	🁹	🁺	🁻	🁼	🁽	🁾	🁿
+        🂀	🂁	🂂	🂃	🂄	🂅	🂆	🂇	🂈	🂉	🂊	🂋	🂌	🂍	🂎	🂏
+        🂐	🂑	🂒	🂓
+        ints are accepted 0-6.
+        If one of the ints is out of range the pips will be null
+        '''
         if isinstance(face_one, int) and isinstance(face_two, int):
             self.small = min(face_one, face_two)
             self.big = max(face_one, face_two)
@@ -33,6 +43,10 @@ class Tile:
                 self.big == other.small or \
                 self.big == other.big
         return False
+
+
+    # region class defaults
+
 
     def __str__(self) -> str:
         return f"[{self.small}/{self.big}]"
@@ -62,8 +76,13 @@ class Tile:
             return (not self < other) and (self != other)
         else:
             return NotImplemented
+        
+    # endregion
 
     def null_tile(self) -> bool:
+        '''
+        returns true if both pips are None
+        '''
         if self.small and self.big:
             return False
         return True

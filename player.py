@@ -12,6 +12,9 @@ class Player:
         pass
 
     def add_hand(self, tile_card: Tile) -> MutableSet[Tile]:
+        '''
+        Adds tile to hand, returns hand
+        '''
         if not isinstance(tile_card, Tile):
             # can't play something that isn't a tile
             return False
@@ -24,6 +27,10 @@ class Player:
         return self.hand
 
     def play(self, played: Tile) -> Union[bool, Tile]:
+        '''
+        Moves tile from hand to played
+        If tile is not in hand, it will not be played
+        '''
         if not isinstance(played, Tile):
             # can't play something that isn't a tile
             return False
