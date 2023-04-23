@@ -5,37 +5,58 @@ class Tile:
     small = None
     big = None
 
-    def __init__(self, face_one: int = None, face_two: int = None, existing_tile: 'Tile' = None) -> 'Tile':
-        if (not face_one) or (not face_two) or (not existing_tile):
-            return None
-        if existing_tile:
+    def __init__(self, face_one: int = None, face_two: int = None, existing_tile: 'Tile' = None) -> None:
+        if isinstance(face_one, int) and isinstance(face_two, int):
+            self.small = min(face_one, face_two)
+            self.big = max(face_one, face_two)
+            if self.small < 0 or self.small > 6 or self.big < 0 or self.big > 6:
+                self.small = None
+                self.big = None
+                return None
+        elif isinstance(existing_tile, Tile):
             self.small = existing_tile.small
             self.big = existing_tile.big
         else:
-            self.small = min(face_one, face_two)
-            self.big = max(face_one, face_two)
-        return self
+            return None
 
-    def valid(self, other_tile: 'Tile') -> bool:
-        other_tile = Tile(other_tile)
+    def valid(self, other: 'Tile') -> bool:
+        if not isinstance(other, Tile):
+            return NotImplemented
         if self.small and self.big:
-            return self.small == other_tile.small or \
-                self.small == other_tile.big or \
-                self.big == other_tile.small or \
-                self.big == other_tile.big
+            return self.small == other.small or \
+                self.small == other.big or \
+                self.big == other.small or \
+                self.big == other.big
         return False
 
-    def __eq__(self, rhs: 'Tile'):
-        return self.small == rhs.small and self.big == rhs.big
-
     def __str__(self) -> str:
-        return "[" + str(self.small) + "/" + str(self.big) + ']'
+        return f"[{self.small}/{self.big}]"
+
+    def __repr__(self) -> str:
+        return str(self)
 
     def __call__(self, rhs: 'Tile') -> bool:
         return rhs.small != None and rhs.big != None
 
     def __hash__(self):
         return hash(str(self))
+
+    def __eq__(self, other: 'Tile'):
+        return self.small == other.small and self.big == other.big
+
+    def __lt__(self, other: 'Tile') -> bool:
+        if isinstance(other, Tile):
+            if self.small == other.small:
+                return self.big < other.big
+            return self.small < other.small
+        else:
+            return NotImplemented
+
+    def __gt__(self, other: 'Tile') -> bool:
+        if isinstance(other, Tile):
+            return (not self < other) and (self != other)
+        else:
+            return NotImplemented
 
     def null_tile(self) -> bool:
         if self.small and self.big:

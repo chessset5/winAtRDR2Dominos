@@ -4,11 +4,21 @@ from typing import MutableSet
 from typing import Union
 
 
+def print_Tiles(tiles: MutableSet[Tile]) -> None:
+    printlist = list(tiles)
+    printlist.sort()
+    print(printlist)
+
+
 def setup(player: int) -> None:
-    table: MutableSet[Tile] = MutableSet[Tile]
-    mystery_tiles: MutableSet[Tile] = set([
-        Tile(i, j) for i in range(7) for j in range(i, 7)])
-    pass
+    table: MutableSet[Tile] = set()
+    dominos: MutableSet[Tile] = set()
+    for i in range(7):
+        for j in range(i, 7):
+            dominos.add(Tile(face_one=i, face_two=j))
+    if Tile() in dominos:
+        dominos.remove(Tile())
+    print_Tiles(dominos)
 
 
 def main() -> None:
