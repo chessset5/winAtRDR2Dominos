@@ -20,6 +20,11 @@ class Tile:
             return None
 
     def valid(self, other: 'Tile') -> bool:
+        '''
+        Validate if the given tile is compatable with current tile.
+        IE 0/0 0/1, 0/1 2/0, etc etc;
+        True if one of the pips on either half of the tile is the same as one of the pips on the other tile. False otherwise.
+        '''
         if not isinstance(other, Tile):
             return NotImplemented
         if self.small and self.big:
