@@ -10,6 +10,11 @@ def print_Tiles(tiles: MutableSet[Tile]) -> None:
     print(printlist)
 
 
+def play() -> None:
+    # TODO: impliment play
+    pass
+
+
 def setup(player: int) -> None:
     table: MutableSet[Tile] = set()
     dominos: MutableSet[Tile] = set()
@@ -18,7 +23,10 @@ def setup(player: int) -> None:
             dominos.add(Tile(face_one=i, face_two=j))
     if Tile() in dominos:
         dominos.remove(Tile())
-    print_Tiles(dominos)
+
+    # TODO: Finish code
+
+    # finish code.
 
 
 def main() -> None:
